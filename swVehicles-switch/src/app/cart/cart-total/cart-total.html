@@ -1,0 +1,66 @@
+@if (selectedVehicle()) {
+  <div class="card">
+    <div class='card-header'>
+        Cart Total
+    </div>
+    <div class='card-body'>
+      <div class="row">
+        <div class="row-label">Price (credits)</div>
+        <div class="row-value">
+          {{price() | number:'1.0-0'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-label cell-bold">Quantity</div>
+        <div class="row-value">
+          <input type="number"
+                class="qty-input"
+                [(ngModel)]="quantity">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-label">Subtotal:</div>
+        <div class="row-value">
+          {{subTotal() | number:'1.0-0'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-label">Delivery:</div>
+        <div class="row-value">{{deliveryFee() | number:'1.0-0'}}</div>
+      </div>
+      <div class="row">
+        <div class="row-label">Notes:</div>
+        <div class="row-value" style="font-weight: 100;">
+          @switch (deliveryMessage()) {
+            @case (deliveryMessageOption.Empty)
+            @case (deliveryMessageOption.FeeRequired) {
+              Spend 100,000 or more for free delivery
+            }
+            @case (deliveryMessageOption.AlmostThere) {
+              You have <span class="almostFree">ALMOST reached FREE delivery!</span>            
+            }
+            @case (deliveryMessageOption.Free) {
+              <span class="free">FREE delivery!</span>
+            }
+            @default {
+              We are currently unable to calculate your delivery fee
+            }
+          }
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-label">Estimated Tax:</div>
+        <div class="row-value">
+          {{tax() | number:'1.0-0'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-label"><b>Total:</b></div>
+        <div class="row-value total">
+          {{totalPrice() | number:'1.0-0'}}
+        </div>
+      </div>
+    </div>
+  </div>
+}
